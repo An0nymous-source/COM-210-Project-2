@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -7,7 +6,8 @@ import java.util.Random;
  * o Small – 10 elements
  * o Medium – 100
  * o Large 1000
- * Code and run the fetch, insert, and delete algorithms on each noting their execution
+ * Code and run the fetch, insert, and delete algorithms on each noting their
+ * execution
  * time. You can see this metric in Java
  * 
  * Author: Armando Escobar Castillo, Cassandra Davies
@@ -26,11 +26,14 @@ public class MyArrays {
     int[] mediumUnsortedArray = generateUnsortedArray(100);
     int[] largeUnsortedArray = generateUnsortedArray(1000);
 
-    int numToSearch = 9;
+    
 
     System.out.println("Sorted Array: " + Arrays.toString(smallSortedArray));
-    System.out
-        .println("The number " + numToSearch + " is found at index " + fetchSorted(smallSortedArray, numToSearch));
+
+    System.out.println("Number 4 inserted into the array" + Arrays.toString(insertSorted(smallSortedArray, 4)));
+
+    int numToSearch = 9;
+    System.out.println("The number " + numToSearch + " is found at index " + fetchSorted(smallSortedArray, numToSearch));
 
     numToSearch = 3;
     System.out.println("\n\nUnsorted Array: " + Arrays.toString(smallUnsortedArray));
@@ -85,6 +88,28 @@ public class MyArrays {
     return -1;
   }
 
+  public static int[] insertSorted(int[] myArray, int numToInsert) {
+
+    int[] newArray = new int[myArray.length + 1];
+    int index = 0;
+
+    for (int i = 0; i < myArray.length; i++) {
+      if(numToInsert > myArray[i] && numToInsert < myArray[i] + 1){
+        index = i + 1;
+      }
+    }
+
+    for (int i = 0; i < myArray.length; i++) {
+      if(myArray[i] == index){
+        newArray[i] = numToInsert;
+        i = index;
+      }
+      newArray[i] = myArray[i];
+    }
+
+    return newArray;
+  }
+
   /**
    * This method generates a sorted array of the given length.
    * 
@@ -93,8 +118,18 @@ public class MyArrays {
    */
   public static int[] generateSortedArray(int arrayLength) {
     int[] myArray = new int[arrayLength];
+    Random random = new Random();
+    int ranInt;
+    int num = 0;
     for (int i = 0; i < myArray.length; i++) {
-      myArray[i] = i;
+      ranInt = random.nextInt(2);
+      
+      if(ranInt == 1){
+        myArray[i] = num + ranInt;
+        num++;
+      }
+      myArray[i] = num;
+      num++;
     }
 
     return myArray;
