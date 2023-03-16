@@ -2,6 +2,17 @@
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Create multiple unsorted and sorted arrays of different sizes
+ * o Small – 10 elements
+ * o Medium – 100
+ * o Large 1000
+ * Code and run the fetch, insert, and delete algorithms on each noting their execution
+ * time. You can see this metric in Java
+ * 
+ * Author: Armando Escobar Castillo, Cassandra Davies
+ * Date: 16 March 2023
+ */
 public class MyArrays {
   public static void main(String[] args) {
 
@@ -10,24 +21,31 @@ public class MyArrays {
     int[] mediumSortedArray = generateSortedArray(100);
     int[] largeSortedArray = generateSortedArray(1000);
 
-
-
     // Unsorted arrays
     int[] smallUnsortedArray = generateUnsortedArray(10);
-    int[] mediumUnsortedArray = generateUnsortedArray(10);
-    int[] largeUnsortedArray = generateUnsortedArray(10);
-
+    int[] mediumUnsortedArray = generateUnsortedArray(100);
+    int[] largeUnsortedArray = generateUnsortedArray(1000);
 
     int numToSearch = 9;
 
-    System.out.println("Array: " + Arrays.toString(smallSortedArray));
-    System.out.println("The number "+ numToSearch + " is found at index " + fetchSorted(smallSortedArray, numToSearch));
+    System.out.println("Sorted Array: " + Arrays.toString(smallSortedArray));
+    System.out
+        .println("The number " + numToSearch + " is found at index " + fetchSorted(smallSortedArray, numToSearch));
 
-    numToSearch = 2;
-    System.out.println("Array: " + Arrays.toString(smallUnsortedArray));
-    System.out.println("The number "+ numToSearch + " is found at index " + fetchSorted(smallUnsortedArray, numToSearch));
+    numToSearch = 3;
+    System.out.println("\n\nUnsorted Array: " + Arrays.toString(smallUnsortedArray));
+    System.out
+        .println("The number " + numToSearch + " is found at index " + fetchUnsorted(smallUnsortedArray, numToSearch));
+
   }
 
+  /**
+   * This method fetches the index of the given number in the sorted array.
+   * 
+   * @param myArray     The sorted array to search in.
+   * @param numToSearch The number to search for.
+   * @return The index of the number in the array, or -1 if not found.
+   */
   public static int fetchSorted(int[] myArray, int numToSearch) {
 
     int low = 0;
@@ -51,11 +69,29 @@ public class MyArrays {
     return -1;
   }
 
-  public static int fetchUnSorted(int[] myArray, int numToSearch) {
-    return 1;
+  /**
+   * This method fetches the index of the given number in the unsorted array.
+   * 
+   * @param myArray     The unsorted array to search in.
+   * @param numToSearch The number to search for.
+   * @return The index of the number in the array, or -1 if not found.
+   */
+  public static int fetchUnsorted(int[] myArray, int numToSearch) {
+    for (int i = 0; i < myArray.length; i++) {
+      if (myArray[i] == numToSearch) {
+        return i;
+      }
+    }
+    return -1;
   }
 
-  public static int[] generateSortedArray(int arrayLength){
+  /**
+   * This method generates a sorted array of the given length.
+   * 
+   * @param arrayLength The length of the array to generate.
+   * @return The sorted array.
+   */
+  public static int[] generateSortedArray(int arrayLength) {
     int[] myArray = new int[arrayLength];
     for (int i = 0; i < myArray.length; i++) {
       myArray[i] = i;
@@ -64,27 +100,20 @@ public class MyArrays {
     return myArray;
   }
 
-  public static int[] generateUnsortedArray(int arrayLength){
+  /**
+   * This method generates an unsorted array of the given length.
+   * 
+   * @param arrayLength The length of the array to generate.
+   * @return The unsorted array.
+   */
+  public static int[] generateUnsortedArray(int arrayLength) {
     int[] myArray = new int[arrayLength];
     Random random = new Random();
 
     for (int i = 0; i < myArray.length; i++) {
-      int randomInt = random.nextInt(arrayLength);
-      if(!constraints(myArray, randomInt)){
-        myArray[i] = random.nextInt(arrayLength);
-      }
+      myArray[i] = random.nextInt(arrayLength);
     }
-
     return myArray;
-  }
-
-  public static boolean constraints (int[] myArray, int num){
-    for (int i = 0; i < myArray.length; i++) {
-      if(myArray[i] == num){
-        return true;
-      }
-    }
-    return false;
   }
 
 }
